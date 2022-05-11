@@ -1,0 +1,39 @@
+
+@mixin myFont {
+    font-family: 'Roboto Mono', monospace;
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+    color: rgb(226, 226, 226);
+}
+
+$typingBoxWidth: 20vw;
+$typingBoxHeight: 30vh;
+
+.typingBox {
+    width: $typingBoxWidth;
+    height: $typingBoxHeight;
+    line-height: $typingBoxHeight;
+    text-align: center;
+    position: fixed;
+    z-index: 3;
+    transform: translate(50vw - ($typingBoxWidth / 2),60vh  - ($typingBoxHeight / 2));
+    background-color: black;
+    p {
+        @include myFont;
+        font-size: 2vw;
+    }
+
+}
+
+.IPAWord {
+    width: $typingBoxWidth;
+    height: $typingBoxHeight;
+    text-align: center;
+    position: fixed;
+    transform: translate(50vw - ($typingBoxWidth / 2),30vh  - ($typingBoxHeight / 2));
+    p {
+        @include myFont;
+        font-size: 4vw;
+    }
+}
