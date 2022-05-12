@@ -19,8 +19,9 @@ export class TypingComponent {
   title = 'ipa-quiz';
   typedWord:string = '';
   currentIPA: ipaStruct;
-  allWords: ipaStruct[] | undefined;
-  index: number = 0;
+  allWords: ipaStruct[] = [];
+  indexEnglish: number = 0;
+  indexIPA: number = 0;
 
   constructor(private dictionary: DictionaryService) {
     this.currentIPA = {
@@ -41,24 +42,22 @@ export class TypingComponent {
     } else {
       this.typedWord = this.typedWord.concat(event.key);
 
-      // if (this.typedWord == this.currentIPA.word) {
+      if (this.typedWord == this.currentIPA.word) {
         this.currentIPA.word = this.newWord();
         this.typedWord = '';
         this.runIpa(this.currentIPA.word);
-      // } 
+      } 
     }
   }
 
   newWord(): string
   {
-    // var index = Math.floor(Math.random() * english_1k.words.length);
-   
-    let word: string = english_1k.words[this.index];
-    this.index += 1;
-    let amongus = JSON.stringify({hi: this.allWords});
-    // this.writeContents(amongus,'./text-files/ipa_1k.json','text/json');
-    console.warn(amongus);
-
+    var index = Math.floor(Math.random() * english_1k.words.length);
+    let word: string = english_1k.words[index];
+    // if (this.indexEnglish > english_1k.words.length)
+    // {
+    //   this.writeContents(amongus,'ipa_1k.json','text/json');
+    // }
     return word;
   }
 
@@ -80,6 +79,15 @@ export class TypingComponent {
     {
       this.runIpa(this.newWord());
     }
+    // let tempIPA: ipaStruct = {
+    //   word: this.currentIPA.word,
+    //   audio: this.currentIPA.audio,
+    //   ipa: this.currentIPA.ipa
+    // };
+    // tempIPA.audio = this.currentIPA.audio;
+    // this.allWords[this.indexIPA] = tempIPA;
+
+    // this.indexIPA += 1;
   }
 
   runIpa(wordToConvert: string)
