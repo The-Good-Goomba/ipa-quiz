@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { TypingComponent } from './typing/typing.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { HomePageComponent } from './home-page/home-page.component';
       {path: '', redirectTo: 'typing', pathMatch: 'full'},
     ]),
     HttpClientModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

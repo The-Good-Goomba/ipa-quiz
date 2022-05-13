@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, HostListener} from '@angular/core';
 import { DictionaryService } from '../dictionary/dictionary.service';
 import { ipaStruct } from '../ipaStruct';
 let english_1k = require('./text-files/english_1k.json');
@@ -15,6 +15,7 @@ let ipa_1k = require('./text-files/ipa_1k.json');
 })
 export class TypingComponent {
   @Input() fileConent: any;
+  
 
   title = 'ipa-quiz';
   typedWord:string = '';
@@ -32,9 +33,9 @@ export class TypingComponent {
       audio: ''
     }
     
+    
     this.runIpa();
   }
-
   
   handleKeyboardEvent(event: KeyboardEvent) {
     if(event.key == 'Backspace') {
@@ -67,9 +68,11 @@ export class TypingComponent {
 
     if ( this.currentIPA.ipa == null)
     {
-      this.runIpa();
+      this.currentIPA = data[0].phonetics[0].text || data[0].phonetics[1].text;
+      if ( this.currentIPA.ipa == null)
+        this.runIpa();
     }
-    
+
     // let tempIPA: ipaStruct = {
     //   word: this.currentIPA.word,
     //   audio: this.currentIPA.audio,
@@ -94,7 +97,8 @@ export class TypingComponent {
       // }
       if (this.currentIPA.ipa == null)
       {
-        console.log(`No IPI for ${this.currentIPA.word}`)
+        console.log(`No IPA for ${this.currentIPA.word}`)
+        this.runIpa();
       }
       
     } else {

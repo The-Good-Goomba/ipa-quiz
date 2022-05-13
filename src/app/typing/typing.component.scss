@@ -9,6 +9,7 @@
 
 $typingBoxWidth: 30vw;
 $typingBoxHeight: 30vh;
+$fontSize: 3vw;
 
 .typingBox {
     width: $typingBoxWidth;
@@ -22,14 +23,9 @@ $typingBoxHeight: 30vh;
 
     p {
         @include myFont;
-        font-size: 2vw;
-        display: inline-block;
+        font-size: $fontSize;
     }
 
-}
-
-#caret {
-    display: inline-block;
 }
 
 .IPAWord {
@@ -82,10 +78,12 @@ $typingBoxHeight: 30vh;
 #caret {
     @include key_frame('blink',1s,infinite);
     border-radius: 0.5rem;
-    width: 2px;
-    height: 1.5rem;
+    width: $fontSize/10;
+    height: $fontSize*1.1;
     opacity: 1;
     background-color: blue;
+    translate: $fontSize/20 $fontSize/2;
+    display: inline-block;
     top: 1px;
     left:4.5px;
     z-index: 4;
