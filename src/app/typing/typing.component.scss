@@ -7,7 +7,7 @@
     color: rgb(226, 226, 226);
 }
 
-$typingBoxWidth: 20vw;
+$typingBoxWidth: 30vw;
 $typingBoxHeight: 30vh;
 
 .typingBox {
@@ -18,12 +18,18 @@ $typingBoxHeight: 30vh;
     position: fixed;
     z-index: 3;
     transform: translate(50vw - ($typingBoxWidth / 2),60vh  - ($typingBoxHeight / 2));
-    background-color: black;
+    background-color: rgb(22,22,22);
+
     p {
         @include myFont;
         font-size: 2vw;
+        display: inline-block;
     }
 
+}
+
+#caret {
+    display: inline-block;
 }
 
 .IPAWord {
@@ -32,8 +38,55 @@ $typingBoxHeight: 30vh;
     text-align: center;
     position: fixed;
     transform: translate(50vw - ($typingBoxWidth / 2),30vh  - ($typingBoxHeight / 2));
-    p {
+    a {
         @include myFont;
         font-size: 4vw;
     }
+
+    :hover {
+        cursor: pointer;
+    }
+
+    button {
+        transform: translateY(-$typingBoxHeight);
+    }
+}
+
+@mixin key_frame($name: "blink", $duration: 333ms, $count: infinit) {
+    @keyframes blink {
+        0% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes other_anim {
+        0% {
+            bottom: -20px;
+        }
+        100% {
+            bottom: 0;
+        }
+    }
+
+    animation-name: $name;
+    animation-duration: $duration;
+    animation-iteration-count: $count;
+}
+
+#caret {
+    @include key_frame('blink',1s,infinite);
+    border-radius: 0.5rem;
+    width: 2px;
+    height: 1.5rem;
+    opacity: 1;
+    background-color: blue;
+    top: 1px;
+    left:4.5px;
+    z-index: 4;
 }
