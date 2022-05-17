@@ -1,18 +1,21 @@
+@use 'variables';
+
 .Navigation {
     margin: 0 ;
     width: 100vw;
     height: 5vw;
-    background-color: rgb(24,24,24);
+    background-color: variables.$backgroundGrey;
  
 
     a {
         font-family: 'Roboto Mono';
-        color: white;
+        color: variables.$fontColour;
         text-decoration: none;
     }
     fa-icon {
         font-family: 'Roboto Mono';
-        color: white;
+        color: variables.$fontColour;
         text-decoration: none;
     }
 }
+

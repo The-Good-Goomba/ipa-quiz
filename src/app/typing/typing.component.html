@@ -1,10 +1,10 @@
 
 <div class="IPAWord">
-  <a onclick="document.getElementById('hearWord').play()">{{currentIPA.ipa}}</a>
+  <a onclick="document.getElementById('hearWord').play()" [style.font-size]="IPAFontSize">{{this.currentIPA.ipa}}</a>
   <audio id="hearWord" [src]="currentIPA.audio" preload="auto"></audio>
 </div>
 
 <div class="typingBox">
   <p>{{typedWord}}</p>
-  <div id="caret" ></div>
+  <div [class]="caret" ></div>
 </div>
