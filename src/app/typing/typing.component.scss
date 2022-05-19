@@ -18,7 +18,7 @@ $fontSize: 3vw;
     height: $typingBoxHeight;
     line-height: $typingBoxHeight;
     text-align: center;
-    position: fixed;
+    position: absolute;
     z-index: 3;
     transform: translate(50vw - ($typingBoxWidth / 2),60vh  - ($typingBoxHeight / 2));
     background-color: variables.$backgroundGrey;
@@ -30,13 +30,28 @@ $fontSize: 3vw;
 
 }
 
+#phoneticTable {
+
+    color: variables.$fontColour;
+    border-collapse: collapse;
+    display: flex;
+    z-index: 5;
+}
+
+.phon {
+    margin: 0 auto;
+    color: variables.$fontColour;
+    border: variables.$fontColour 2px solid;
+    border-collapse: collapse;
+    z-index: 5;
+}
+
 .IPAWord {
     width: $typingBoxWidth;
     height: $typingBoxHeight;
     text-align: center;
-    position: fixed;
+    position: absolute;
     transform: translate(50vw - ($typingBoxWidth / 2),30vh  - ($typingBoxHeight / 2));
-    background-color: gray;
     margin: 0 auto;
     @include myFont;
 
@@ -89,5 +104,5 @@ $fontSize: 3vw;
 }
 
 .flashing {
-    @include key_frame('blink',1s,infinite);
+    @include key_frame('blink',0.8s,infinite);
 }

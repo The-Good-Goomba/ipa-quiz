@@ -2,9 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, HostListener} from '@angular/core';
 import { DictionaryService } from '../dictionary/dictionary.service';
 import { ipaStruct } from '../ipaStruct';
-let fs = require('fs');
-let english_1k = require('./text-files/english_1k.json');
-let ipa_1k = require('./text-files/ipa_1k.json');
+let english_1k = require('./../../assets/english_1k.json');
+let english_450k = require('./../../assets/english_450k.json');
 
 @Component({
   selector: 'app-typing',
@@ -21,12 +20,11 @@ export class TypingComponent {
   title = 'ipa-quiz';
   typedWord:string = '';
   currentIPA: ipaStruct;
-  useFile: boolean = true;
+  nextIPA: ipaStruct;
   IPAFontSize: string = '';
+  english = english_450k;
+  filter: string;
 
-  // allWords: ipaStruct[] = [];
-  // indexEnglish: number = 0;
-  // indexIPA: number = 0;
 
   constructor(private dictionary: DictionaryService) {
     this.currentIPA = {
@@ -34,11 +32,15 @@ export class TypingComponent {
       word:'',
       audio: ''
     }
-
-    let amongus = fs.readFileSync('./text-files/english_1k.json');
-    console.log(amongus);
+    this.nextIPA = {
+      ipa: '',
+      word:'',
+      audio: ''
+    }
+    this.filter = 'blur(0px)'
     
-    this.runIpa();
+    this.runIpa(this.currentIPA);
+    this.runIpa(this.nextIPA);
   }
   
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -55,43 +57,40 @@ export class TypingComponent {
       this.caret = 'caret';
 
       if (this.typedWord == this.currentIPA.word) {
-        this.runIpa()
+        this.currentIPA.ipa = this.nextIPA.ipa;
+        this.currentIPA.word = this.nextIPA.word;
+        this.currentIPA.audio = this.nextIPA.audio;
+        this.runIpa(this.nextIPA);
         this.typedWord = '';
         this.caret = 'caret flashing'
       } 
     }
   }
 
-  setStruct(data: any) {
+  setStruct(data: any,struct: ipaStruct) {
 
-    this.currentIPA.ipa = data[0].phonetic;
-    this.currentIPA.word = data[0].word;
-    this.currentIPA.audio = data[0].phonetics[0].audio;
-
-    if ( this.currentIPA.ipa == null)
+    try {
+      struct.ipa = data[0].phonetic;
+      struct.word = data[0].word;
+      struct.audio = data[0].phonetics[0].audio;
+    } catch(error)
     {
-      this.currentIPA = data[0].phonetics[0].text || data[0].phonetics[1].text;
+      
       for(let i = 0;1 < data[0].phonetics.length; i++)
       {
-        this.currentIPA = data[0].phonetics[i].text;
-        if (this.currentIPA.ipa != null)
-        {
-          break
+        try {
+          struct.ipa = data[0].phonetics[i].text;
+          if (struct.ipa != null)
+          {
+            break
+          }
+        } catch(error) {
+          
         }
       }
-
-      if ( this.currentIPA.ipa == null)
-        this.runIpa();
+      this.runIpa(struct);
     }
 
-    // let tempIPA: ipaStruct = {
-    //   word: this.currentIPA.word,
-    //   audio: this.currentIPA.audio,
-    //   ipa: this.currentIPA.ipa
-    // };
-    // tempIPA.audio = this.currentIPA.audio;
-    // this.allWords[this.indexIPA] = tempIPA;
-    // this.indexIPA += 1;
 
   }
 
@@ -99,44 +98,28 @@ export class TypingComponent {
   {
     if (this.currentIPA.ipa.length < 8)
     {
-      return 4
+      return 5
     } else {
-      return 32/this.currentIPA.ipa.length
+      return 36/this.currentIPA.ipa.length
     }
   }
 
-  runIpa()
+  runIpa(inputIPA: ipaStruct)
   {
+    var index = Math.floor(Math.random() * this.english.words.length);
+    let word: string = this.english.words[index];
 
-    if (this.useFile){
-      var index = Math.floor(Math.random() * ipa_1k.hi.length);
-      this.currentIPA = ipa_1k.hi[index];
-  
-      // if (this.indexEnglish > english_1k.words.length)
-      // {
-      //   this.writeContents(amongus,'ipa_1k.json','text/json');
-      // }
-      if (this.currentIPA.ipa == null)
-      {
-        console.log(`No IPA for ${this.currentIPA.word}`)
-        this.runIpa();
-      }
-
-      this.IPAFontSize = `${this.wordSize()}vw`;
-      
-    } else {
-      var index = Math.floor(Math.random() * english_1k.words.length);
-      let word: string = english_1k.words[index];
-
-      this.dictionary.getData(word).subscribe(
-        (data: any) => {
-          this.setStruct(data);
-        },
-        (error: HttpErrorResponse) => {
-          console.log('Cant find this word');
-          this.runIpa();
-      });
-    }
+    this.dictionary.getData(word).subscribe(
+      (data: any) => {
+        this.setStruct(data, inputIPA);
+        this.IPAFontSize = `${this.wordSize()}vw`;
+        console.log('found word')
+      },
+      (error: HttpErrorResponse) => {
+        console.log('Cant find this word');
+        this.runIpa(inputIPA);
+    });
+    this.IPAFontSize = `${this.wordSize()}vw`;
 
   }
 

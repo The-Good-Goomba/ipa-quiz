@@ -1,10 +1,222 @@
-
-<div class="IPAWord">
+<div class="IPAWord" [style.filter]="filter">
   <a onclick="document.getElementById('hearWord').play()" [style.font-size]="IPAFontSize">{{this.currentIPA.ipa}}</a>
   <audio id="hearWord" [src]="currentIPA.audio" preload="auto"></audio>
 </div>
 
-<div class="typingBox">
+<div class="typingBox" [style.filter]="filter">
   <p>{{typedWord}}</p>
-  <div [class]="caret" ></div>
+  <div [class]="caret"></div>
+</div>
+
+<div id="phoneticTable">
+  <table class="phon" id="chart-vowels">
+    <caption>vowels</caption>
+    <thead>
+      <tr>
+        <th class="ipa">IPA</th>
+        <th>examples</th>
+        <th class="listen">listen</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ipa"><code>ʌ</code></td>
+        <td class="wordex">c<u>u</u>p, l<u>u</u>ck</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ɑ:</code></td>
+        <td class="wordex"><u>a</u>rm, f<u>a</u>ther </td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>æ</code></td>
+        <td class="wordex">c<u>a</u>t, bl<u>a</u>ck</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ɛ</code></td>
+        <td class="wordex">m<u>e</u>t, b<u>e</u>d</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ə</code></td>
+        <td class="wordex"><u>a</u>way, cin<u>e</u>m<u>a</u></td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ɜ:ʳ</code></td>
+        <td class="wordex">t<u>ur</u>n, l<u>ear</u>n</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ɪ</code></td>
+        <td class="wordex">h<u>i</u>t, s<u>i</u>tt<u>i</u>ng</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>i:</code></td>
+        <td class="wordex">s<u>ee</u>, h<u>ea</u>t</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ɒ</code></td>
+        <td class="wordex">h<u>o</u>t, r<u>o</u>ck</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ɔ:</code></td>
+        <td class="wordex">c<u>a</u>ll, f<u>ou</u>r</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ʊ</code></td>
+        <td class="wordex">p<u>u</u>t, c<u>oul</u>d</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>u:</code></td>
+        <td class="wordex">bl<u>ue</u>, f<u>oo</u>d</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>aɪ</code></td>
+        <td class="wordex">f<u>i</u>ve, <u>eye</u></td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>aʊ</code></td>
+        <td class="wordex">n<u>ow</u>, <u>ou</u>t</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>eɪ</code></td>
+        <td class="wordex">s<u>ay</u>, <u>eigh</u>t</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>oʊ</code></td>
+        <td class="wordex">g<u>o</u>, h<u>o</u>me</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ɔɪ</code></td>
+        <td class="wordex">b<u>oy</u>, j<u>oi</u>n</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>eəʳ</code></td>
+        <td class="wordex">wh<u>ere</u>, <u>air</u></td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ɪəʳ</code></td>
+        <td class="wordex">n<u>ear</u>, h<u>ere</u></td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ʊəʳ</code></td>
+        <td class="wordex">p<u>ure</u>, t<u>our</u>ist</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!--begin consonants-->
+  <table class="phon">
+    <caption>consonants</caption>
+    <thead>
+      <tr>
+        <th class="ipa">IPA</th>
+        <th>examples</th>
+        <th class="listen">listen</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="ipa"><code>b</code></td>
+        <td class="wordex"><u>b</u>ad, la<u>b</u></td>
+      <tr>
+        <td class="ipa"><code>d</code></td>
+        <td class="wordex"><u>d</u>i<u>d</u>, la<u>d</u>y</td>
+      <tr>
+        <td class="ipa"><code>f</code></td>
+        <td class="wordex"><u>f</u>ind, i<u>f</u></td>
+      <tr>
+        <td class="ipa"><code>g</code></td>
+        <td class="wordex"><u>g</u>ive, fla<u>g</u></td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>h</code></td>
+        <td class="wordex"><u>h</u>ow, <u>h</u>ello</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>j</code></td>
+        <td class="wordex"><u>y</u>es, <u>y</u>ellow</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>k</code></td>
+        <td class="wordex"><u>c</u>at, ba<u>ck</u></td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>l</code></td>
+        <td class="wordex"><u>l</u>eg, <u>l</u>itt<u>l</u>e</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>m</code></td>
+        <td class="wordex"><u>m</u>an, le<u>m</u>on</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>n</code></td>
+        <td class="wordex"><u>n</u>o, te<u>n</u></td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ŋ</code></td>
+        <td class="wordex">si<u>ng</u>, fi<u>n</u>ger</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>p</code></td>
+        <td class="wordex"><u>p</u>et, ma<u>p</u></td>
+
+      </tr>
+      <tr>
+        <td class="ipa"><code>ɹ</code></td>
+        <td class="wordex"><u>r</u>ed, t<u>r</u>y</td>
+
+      </tr>
+      <tr>
+        <td class="ipa"><code>s</code></td>
+        <td class="wordex"><u>s</u>un, mi<u>ss</u></td>
+
+      </tr>
+      <tr>
+        <td class="ipa"><code>ʃ</code></td>
+        <td class="wordex"><u>sh</u>e, cra<u>sh</u></td>
+
+      </tr>
+      <tr>
+        <td class="ipa"><code>t</code></td>
+        <td class="wordex"><u>t</u>ea, ge<u>tt</u>ing</td>
+
+      </tr>
+      <tr>
+        <td class="ipa"><code>tʃ</code></td>
+        <td class="wordex"><u>ch</u>eck, <u>ch</u>ur<u>ch</u></td>
+
+      </tr>
+      <tr>
+        <td class="ipa"><code>θ</code></td>
+        <td class="wordex"><u>th</u>ink, bo<u>th</u></td>
+
+      </tr>
+      <tr>
+        <td class="ipa"><code>ð</code></td>
+        <td class="wordex"><u>th</u>is, mo<u>th</u>er</td>
+
+      </tr>
+      <tr>
+        <td class="ipa"><code>v</code></td>
+        <td class="wordex"><u>v</u>oice, fi<u>ve</u></td>
+
+      </tr>
+      <tr>
+        <td class="ipa"><code>w</code></td>
+        <td class="wordex"><u>w</u>et, <u>w</u>indo<u>w</u></td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>z</code></td>
+        <td class="wordex"><u>z</u>oo, la<u>z</u>y</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>ʒ</code></td>
+        <td class="wordex">plea<u>s</u>ure, vi<u>si</u>on</td>
+      </tr>
+      <tr>
+        <td class="ipa"><code>dʒ</code></td>
+        <td class="wordex"><u>j</u>ust, lar<u>ge</u></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
