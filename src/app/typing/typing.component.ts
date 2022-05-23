@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, HostListener} from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { DictionaryService } from '../dictionary/dictionary.service';
 import { ipaStruct } from '../ipaStruct';
 let english_1k = require('./../../assets/english_1k.json');
@@ -17,7 +17,6 @@ export class TypingComponent {
   @Input() fileConent: any;
   
   caret: string = 'caret flashing';
-  title = 'ipa-quiz';
   typedWord:string = '';
   currentIPA: ipaStruct;
   nextIPA: ipaStruct;
@@ -68,7 +67,6 @@ export class TypingComponent {
   }
 
   setStruct(data: any,struct: ipaStruct) {
-
     try {
       struct.ipa = data[0].phonetic;
       struct.word = data[0].word;
@@ -82,7 +80,7 @@ export class TypingComponent {
           struct.ipa = data[0].phonetics[i].text;
           if (struct.ipa != null)
           {
-            break
+            return;
           }
         } catch(error) {
           
@@ -110,15 +108,17 @@ export class TypingComponent {
     let word: string = this.english.words[index];
 
     this.dictionary.getData(word).subscribe(
-      (data: any) => {
-        this.setStruct(data, inputIPA);
-        this.IPAFontSize = `${this.wordSize()}vw`;
-        console.log('found word')
-      },
-      (error: HttpErrorResponse) => {
-        console.log('Cant find this word');
-        this.runIpa(inputIPA);
-    });
+        (data: any) => {
+          this.setStruct(data, inputIPA);
+          this.IPAFontSize = `${this.wordSize()}vw`;
+          console.log('found word')
+        },
+        (error: HttpErrorResponse) => {
+          console.warn('Cant find this word', error)
+          this.runIpa(inputIPA);
+      });
+      
+    
     this.IPAFontSize = `${this.wordSize()}vw`;
 
   }
