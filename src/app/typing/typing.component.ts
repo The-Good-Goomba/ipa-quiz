@@ -21,8 +21,9 @@ export class TypingComponent {
   currentIPA: ipaStruct;
   nextIPA: ipaStruct;
   IPAFontSize: string = '';
-  english = english_450k;
+  english = english_1k;
   filter: string;
+  nextWord: Boolean = false;
 
 
   constructor(private dictionary: DictionaryService) {
@@ -56,14 +57,30 @@ export class TypingComponent {
       this.caret = 'caret';
 
       if (this.typedWord == this.currentIPA.word) {
-        this.currentIPA.ipa = this.nextIPA.ipa;
-        this.currentIPA.word = this.nextIPA.word;
-        this.currentIPA.audio = this.nextIPA.audio;
+        this.typedWord = this.typedWord.concat(event.key);
+        try {
+          this.currentIPA.ipa = this.nextIPA.ipa;
+          this.currentIPA.word = this.nextIPA.word;
+          this.currentIPA.audio = this.nextIPA.audio;
+          this.IPAFontSize = `${this.wordSize()}vw`;
+        } catch(error) {
+          this.nextWord = true;
+          console.log("Waiting for API...");
+        }
+        
         this.runIpa(this.nextIPA);
         this.typedWord = '';
         this.caret = 'caret flashing'
       } 
     }
+  }
+
+  setCurrentIPA()
+  {
+    this.currentIPA.ipa = this.nextIPA.ipa;
+    this.currentIPA.word = this.nextIPA.word;
+    this.currentIPA.audio = this.nextIPA.audio;
+    this.IPAFontSize = `${this.wordSize()}vw`;
   }
 
   setStruct(data: any,struct: ipaStruct) {
@@ -73,7 +90,6 @@ export class TypingComponent {
       struct.audio = data[0].phonetics[0].audio;
     } catch(error)
     {
-      
       for(let i = 0;1 < data[0].phonetics.length; i++)
       {
         try {
@@ -87,6 +103,11 @@ export class TypingComponent {
         }
       }
       this.runIpa(struct);
+    }
+    if (this.nextWord)
+    {
+      this.setCurrentIPA();
+      this.nextWord = false;
     }
 
 
@@ -107,19 +128,18 @@ export class TypingComponent {
     var index = Math.floor(Math.random() * this.english.words.length);
     let word: string = this.english.words[index];
 
+    console.log("Looking for " + word)
+
     this.dictionary.getData(word).subscribe(
         (data: any) => {
           this.setStruct(data, inputIPA);
-          this.IPAFontSize = `${this.wordSize()}vw`;
           console.log('found word')
         },
         (error: HttpErrorResponse) => {
           console.warn('Cant find this word', error)
           this.runIpa(inputIPA);
       });
-      
-    
-    this.IPAFontSize = `${this.wordSize()}vw`;
+
 
   }
 
