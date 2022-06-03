@@ -1,0 +1,9 @@
+<div class='wordGoal'>
+    <a onclick="document.getElementById('hearWord').play()" [style.font-size]="wordFontSize">{{this.ipa.currentIPA.word}}</a>
+    <audio id="hearWord" [src]="ipa.currentIPA.audio" preload="auto"></audio>
+</div>
+
+<div id='mcBoxes'>
+    
+</div>
+
