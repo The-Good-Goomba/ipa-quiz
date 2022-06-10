@@ -1,0 +1,41 @@
+@use '../variables';
+
+$wordWidth: 50vw;
+$wordHeight: 50vh;
+
+@mixin myFont {
+    font-family: 'Roboto Mono', monospace;
+    line-height: 1.5;
+    display: inline-block;
+    vertical-align: middle;
+    color: variables.$fontColour;
+}
+
+.wordGoal 
+{
+    width: $wordWidth;
+    height: $wordHeight;
+    text-align: center;
+    position: absolute;
+    transform: translate(50vw - ($wordWidth / 2),30vh  - ($wordHeight / 2));
+    margin: 0 auto;
+    @include myFont;
+}
+
+#mcBoxes 
+{
+    width: $wordWidth;
+    height: $wordHeight;
+    transform: translate(50vw - ($wordWidth / 2),50vh  - ($wordHeight / 2));
+    margin: 0;
+}
+
+.choiceButton {
+    width: 45%;
+    height: 45%;
+    margin: 2%;
+    background-color: variables.$backgroundGrey;
+    @include myFont();
+    font-size: 200%;
+    
+}
