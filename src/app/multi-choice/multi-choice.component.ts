@@ -1,5 +1,5 @@
-import { parseTemplate } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+
+import { Component, Output, EventEmitter } from '@angular/core';
 import { DictionaryService } from '../dictionary/dictionary.service';
 import { Ipa } from '../ipa/ipa';
 import { ipaStruct } from '../ipaStruct';
@@ -11,6 +11,8 @@ let mistakes = require('./../../assets/mistakes.json');
 	styleUrls: ['./multi-choice.component.scss']
 })
 export class MultiChoiceComponent {
+	@Output() correctWord = new EventEmitter<string>();
+	@Output() incorrectWord = new EventEmitter<string>();
 	ipa: Ipa;
 	wordFontSize: string = '5vw';
 	boxInfo: string[] = [];
@@ -99,10 +101,10 @@ export class MultiChoiceComponent {
 
 	guess = (index: number): void => {
 		if (index == this.correctIndex) {
-			console.log('correct');
+			this.correctWord.emit();
 			this.ipa.nextWordIPA();
 		} else {
-			console.log('wrong');
+			this.incorrectWord.emit();
 		}
 	}
 

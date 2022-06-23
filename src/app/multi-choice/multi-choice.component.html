@@ -1,12 +1,14 @@
-<div class='wordGoal'>
-    <a onclick="document.getElementById('hearWord').play()" [style.font-size]="wordFontSize">{{this.ipa.currentIPA.word}}</a>
-    <audio id="hearWord" [src]="ipa.currentIPA.audio" preload="auto"></audio>
-</div>
+<div id="component">
+    <div class='wordGoal'>
+        <a onclick="document.getElementById('hearWord').play()" [style.font-size]="wordFontSize">{{this.ipa.currentIPA.word}}</a>
+        <audio id="hearWord" [src]="ipa.currentIPA.audio" preload="auto"></audio>
+    </div>
 
-<div id='mcBoxes'>
-    <button class='choiceButton' (click)="guess(0)">{{this.boxInfo[0]}}</button>
-    <button class='choiceButton' (click)="guess(1)">{{this.boxInfo[1]}}</button>
-    <button class='choiceButton' (click)="guess(2)">{{this.boxInfo[2]}}</button>
-    <button class='choiceButton' (click)="guess(3)">{{this.boxInfo[3]}}</button>
+    <div id='mcBoxes'>
+        <button class='choiceButton' (click)="guess(0)">{{this.boxInfo[0]}}</button>
+        <button class='choiceButton' (click)="guess(1)">{{this.boxInfo[1]}}</button>
+        <button class='choiceButton' (click)="guess(2)">{{this.boxInfo[2]}}</button>
+        <button class='choiceButton' (click)="guess(3)">{{this.boxInfo[3]}}</button>
+    </div>
 </div>
 

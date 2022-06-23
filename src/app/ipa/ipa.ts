@@ -76,8 +76,7 @@ export class Ipa {
 		}
 
 		if (struct === this.currentIPA) {
-			console.log('bruh')
-			this.wordSizeFunc(struct);
+			this.wordSizeFunc(this.currentIPA);
 		}
 
 	}

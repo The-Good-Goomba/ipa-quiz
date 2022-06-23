@@ -1,0 +1,61 @@
+@use '../variables';
+
+#Navigation {
+    display: grid;
+    gap: .5rem;
+   align-items: center;
+   font-size: 2.3rem;
+   grid-auto-flow: column;
+   grid-template-areas: "logo menu config";
+   grid-template-columns: auto 1fr auto;
+   line-height: 2.3rem;
+   padding: 0 5px;
+   z-index: 2;
+}
+
+#menu {
+    color: variables.$lightGrey;
+    display: grid;
+    font-size: 1rem;
+    gap: .5rem;
+    grid-auto-flow: column;
+    line-height: 1rem;
+    width: fit-content;
+}
+
+#book {
+    width: 5rem;
+    height: 5rem;
+}
+
+.text-button {
+    align-content: center;
+    appearance: none;
+    border: none;
+    color: variables.$lightGrey;
+    cursor: pointer;
+    display: grid;
+    font-family: inherit;
+    font-size: 1rem;
+    gap: .25rem;
+    grid-auto-flow: column;
+    height: min-content;
+    height: -moz-min-content;
+    line-height: 1.25rem;
+    padding: .5rem;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    width: max-content;
+  }
+
+  .icon {
+    display: grid;
+    height: 1.25rem;
+    place-content: center;
+    width: 1.25rem;
+    :hover {
+        color: variables.$fontColour;
+    }
+  }

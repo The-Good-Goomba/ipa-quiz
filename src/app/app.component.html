@@ -2,12 +2,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
 
-<nav class="Navigation">
-  <a routerLink="/home-page" routerLinkActive="activebutton">Home Page</a>
-  <a routerLink="/typing" routerLinkActive="activebutton">Typing</a>
-  <a routerLink="/multi-choice" routerLinkActive="activebutton">Multi-choice</a>
-  <fa-icon [icon]="faKeyboard"></fa-icon>
-  
-</nav>
+<div style="display:flex;justify-content:space-around;margin:0;">
+    <div id="centerContent" style="padding-top: 5px;">
 
-<router-outlet></router-outlet>
+        <div>
+            <app-navigation></app-navigation>
+        </div>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

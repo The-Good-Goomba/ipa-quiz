@@ -1,21 +1,14 @@
-@use 'variables';
-
-.Navigation {
-    margin: 0 ;
-    width: 100vw;
-    height: 5vw;
-    background-color: variables.$backgroundGrey;
- 
-
-    a {
-        font-family: 'Roboto Mono';
-        color: variables.$fontColour;
-        text-decoration: none;
-    }
-    fa-icon {
-        font-family: 'Roboto Mono';
-        color: variables.$fontColour;
-        text-decoration: none;
-    }
+#centerContent {
+    align-items: center;
+    display: grid;
+    gap: 2rem;
+    grid-auto-flow: row;
+    grid-template-rows: auto 1fr auto;
+    max-width: 1000px;
+    min-height: 100vh;
+    padding: 0rem 2rem 0rem 2rem;
+    transition: padding-top .125s;
+    width: 100%;
+    z-index: 999;
 }
 

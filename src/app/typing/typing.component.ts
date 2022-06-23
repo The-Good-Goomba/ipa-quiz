@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 import { DictionaryService } from '../dictionary/dictionary.service';
 import { Ipa } from '../ipa/ipa';
 import { ipaStruct } from '../ipaStruct';
@@ -12,17 +12,17 @@ import { ipaStruct } from '../ipaStruct';
   }
 })
 export class TypingComponent {
-  
+  @Output() correctWord = new EventEmitter<string>();
+  @Output() incorrectWord = new EventEmitter<string>();
+
+
   caret: string = 'caret flashing';
   typedWord:string = '';
   ipa: Ipa;
-  filter: string;
-  IPAFontSize: string;
+
 
   constructor(private dictionary: DictionaryService) {
     this.ipa = new Ipa(this.dictionary, this.callbackFunc);
-    this.filter = 'blur(0px)'
-    this.IPAFontSize = '5vw';
   }
   
   handleKeyboardEvent(event: KeyboardEvent) {
@@ -40,6 +40,7 @@ export class TypingComponent {
 
       if (this.typedWord == this.ipa.currentIPA.word) {
         this.typedWord = this.typedWord.concat(event.key);
+        this.correctWord.emit();
         this.ipa.nextWordIPA();
         this.typedWord = '';
         this.caret = 'caret flashing'
@@ -51,13 +52,7 @@ export class TypingComponent {
   // Below is the callback function for the ipa class
   // Big arrow function allows it to be passed to the subclass 😎
   callbackFunc = (struct: ipaStruct): void => {
-    if (struct.ipa.length < 8)
-    {
-      this.IPAFontSize = '5vw';
-   
-    } else {
-      this.IPAFontSize = `${36/struct.ipa.length}vw`;
-    }
+  
   }
 
   
