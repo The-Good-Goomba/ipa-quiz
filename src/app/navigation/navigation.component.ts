@@ -14,6 +14,9 @@ export class NavigationComponent {
   faInfo = faInfo;
   multiChoice = faObjectGroup
 
+  configClass: string = 'config';
+  timeClass: string = '';
+
   constructor(private navService: NavService) { }
 
   setActiveQuiz = (input: string) =>

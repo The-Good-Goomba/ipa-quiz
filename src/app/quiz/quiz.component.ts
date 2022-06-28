@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DictionaryService } from '../dictionary/dictionary.service';
 import { NavService } from '../navigation/nav.service';
 
@@ -6,19 +6,19 @@ import { NavService } from '../navigation/nav.service';
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
-  host: {
-    '(document:mouseDown)' : 'handleKeyDown($event)'
-  }
 })
 
 
 
 export class QuizComponent {
 
+  bigClass: string = '';
+  typingActive: boolean = true;
 
 
-  constructor(private navService: NavService) { 
-    console.log('bruh')
+  constructor(private navService: NavService) 
+  {
+    navService.setFunction(this.changeComponent)
   }
 
   activeComponent = (): string =>
@@ -26,12 +26,11 @@ export class QuizComponent {
     return this.navService.getActiveQuiz()
   }
 
-  typingActive = (): boolean => { return this.activeComponent() == 'typing'}
-
-  handleKeyDown()
+  changeComponent = () => 
   {
-
+    this.typingActive = this.activeComponent() == 'typing'
   }
+
 
   gotCorrectWord = () =>
   {
@@ -40,7 +39,12 @@ export class QuizComponent {
 
   gotWrongWord = () =>
   {
-    
+    this.bigClass = 'shake';
+    setTimeout(this.stopShake, 500)
+  }
+
+  stopShake = () => {
+    this.bigClass = '';
   }
   
 

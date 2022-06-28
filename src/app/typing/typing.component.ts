@@ -32,19 +32,23 @@ export class TypingComponent {
       {
         this.caret = 'caret flashing';
       }
-    } else if (event.key.length > 1) {
-
-    } else {
-      this.typedWord = this.typedWord.concat(event.key);
-      this.caret = 'caret';
-
+    } else if (event.key == 'Enter') {
       if (this.typedWord == this.ipa.currentIPA.word) {
         this.typedWord = this.typedWord.concat(event.key);
         this.correctWord.emit();
         this.ipa.nextWordIPA();
         this.typedWord = '';
         this.caret = 'caret flashing'
-      } 
+      }  else {
+        this.incorrectWord.emit();
+      }
+    } else if (event.key.length > 1) {
+      
+    } else {
+      this.typedWord = this.typedWord.concat(event.key);
+      this.caret = 'caret';
+
+      
     }
   }
 

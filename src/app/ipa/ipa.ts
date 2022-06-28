@@ -56,16 +56,6 @@ export class Ipa {
 			if (struct.ipa == undefined) { throw "No IPA" }
 		} catch (error) {
 			console.log(error);
-			for (let i = 0; 1 < data[0].phonetics.length; i++) {
-				try {
-					struct.ipa = data[0].phonetics[i].text;
-					if (struct.ipa != null) {
-						return;
-					}
-				} catch (error) {
-
-				}
-			}
 			this.runIpa(struct);
 		}
 		if (this.nextWord) {

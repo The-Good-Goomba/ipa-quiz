@@ -1,4 +1,4 @@
-<div>
+<div [class]='bigClass'>
     <div *ngIf="typingActive; else multiChoice">
         <app-typing (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()"></app-typing>
     </div>
