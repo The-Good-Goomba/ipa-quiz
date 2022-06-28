@@ -5,6 +5,9 @@
 .shake {
     animation: shake 0.5s;
 }
+.hidden {
+    display: none !important;
+}
 
 @keyframes shake {
     0% { transform: translateX(1px)}

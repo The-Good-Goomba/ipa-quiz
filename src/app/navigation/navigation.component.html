@@ -222,12 +222,22 @@
         </a>
     </div>
 
-    <div [class]="configClass">
-        <div class="mode">
-
+    <div class="config">
+        <div class="difficulty">
+            <div class="text-button" [class.active]="difficulty === 'easy'" (click)="setDifficulty('easy')">easy</div>
+            <div class="text-button" [class.active]="difficulty === 'medium'" (click)="setDifficulty('medium')">medium</div>
+            <div class="text-button" [class.active]="difficulty === 'hard'" (click)="setDifficulty('hard')">hard</div>
         </div>
-        <div [class]="timeClass">
-
+        <div class="mode">
+            <div class="text-button" [class.active]="quizMode === 'zen'" (click)="setQuizMode('zen')">zen</div>
+            <div class="text-button" [class.active]="quizMode === 'timed'" (click)="setQuizMode('timed')">timed</div>
+            <div class="text-button" [class.active]="quizMode === 'endless'" (click)="setQuizMode('endless')">endless</div>
+        </div>
+        <div class="timeClass" [class.hidden]="quizMode !== 'timed'">
+            <div class="text-button" [class.active]="activeTime === 15" (click)="setActiveTime(15)">15</div>
+            <div class="text-button" [class.active]="activeTime === 30" (click)="setActiveTime(30)">30</div>
+            <div class="text-button" [class.active]="activeTime === 60" (click)="setActiveTime(60)">60</div>
+            <div class="text-button" [class.active]="activeTime === 120" (click)="setActiveTime(120)">120</div>
         </div>
     </div>
 

@@ -14,14 +14,33 @@ export class NavigationComponent {
   faInfo = faInfo;
   multiChoice = faObjectGroup
 
-  configClass: string = 'config';
-  timeClass: string = '';
+  quizMode: string = 'zen';
+  activeTime: number = 15;
+  difficulty: string = 'easy';
 
   constructor(private navService: NavService) { }
 
   setActiveQuiz = (input: string) =>
   {
     this.navService.setActiveQuiz(input);
+  }
+
+  setQuizMode = (input: string) =>
+  {
+    this.quizMode = input;
+    this.navService.setQuizMode(input);
+  }
+
+  setActiveTime = (input: number) =>
+  {
+    this.activeTime = input;
+    this.navService.setActiveTime(input);
+  }
+
+  setDifficulty = (input: string) =>
+  {
+    this.difficulty = input;
+    this.navService.setDifficulty(input);
   }
 
 }

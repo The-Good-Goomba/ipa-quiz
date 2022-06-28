@@ -27,9 +27,12 @@ export class MultiChoiceComponent {
 		this.ipa = new Ipa(this.dictionary, this.callbackFunc);
 	}
 
+
+  // Below is the callback function for the ipa class
+  // Big arrow function allows it to be passed to the subclass 😎
+
 	callbackFunc = (struct: ipaStruct): void => {
 		this.wordFontSize = struct.word.length > 10 ? `${25 / struct.word.length}vw` : '5vw';
-		console.log(struct)
 		let temp = this.parseIpa(struct.ipa)
 		this.boxNamed(temp, struct.ipa);
 	}
@@ -38,7 +41,6 @@ export class MultiChoiceComponent {
 	parseIpa = (ipa: string): parsedValue[] => {
 		let parsed: parsedValue[] = [];
 		let ipaArray: string[] = ipa.split('');
-		console.log(ipaArray);
 	
 		var i = 0;
 
@@ -65,7 +67,6 @@ export class MultiChoiceComponent {
 			}
 			i++;
 		} while (i < ipaArray.length);
-		console.log(parsed);
 		return parsed;
 	}
 
@@ -89,7 +90,6 @@ export class MultiChoiceComponent {
 			} else {
 				let randomNoIndex: number = ((i > this.correctIndex) ? i - 1 : i);
 				let among: string = originalIPA.substring(bruh[indices[randomNoIndex]].index, bruh[indices[randomNoIndex]].index + bruh[indices[randomNoIndex]].length);
-				console.log(among);
 				let amongIndex: number = Math.floor(Math.random() * (mistakes[among].length - 1));
 				let replacement = mistakes[among][amongIndex];
 				this.boxInfo[i] = originalIPA.substring(0,bruh[indices[randomNoIndex]].index) + replacement + originalIPA.substring(bruh[indices[randomNoIndex]].index + bruh[indices[randomNoIndex]].length);

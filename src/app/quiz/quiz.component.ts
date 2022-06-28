@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
-import { DictionaryService } from '../dictionary/dictionary.service';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { NavService } from '../navigation/nav.service';
+import { TypingComponent } from '../typing/typing.component';
 
 @Component({
   selector: 'app-quiz',
@@ -11,9 +11,11 @@ import { NavService } from '../navigation/nav.service';
 
 
 export class QuizComponent {
+  @ViewChild(TypingComponent) typingComponent!: TypingComponent;
 
   bigClass: string = '';
-  typingActive: boolean = true;
+  activeQuiz: string = 'typing';
+  endlessCounter: number = 0;
 
 
   constructor(private navService: NavService) 
@@ -21,22 +23,20 @@ export class QuizComponent {
     navService.setFunction(this.changeComponent)
   }
 
-  activeComponent = (): string =>
-  {
-    return this.navService.getActiveQuiz()
-  }
-
   changeComponent = () => 
   {
-    this.typingActive = this.activeComponent() == 'typing'
+    this.activeQuiz = this.navService.getActiveQuiz()
+    this.typingComponent.clearTypedWord();
   }
 
 
   gotCorrectWord = () =>
   {
-    
+    if (this.navService.getQuizMode() === 'endless')
+    {
+      this.endlessCounter++;
+    }
   }
-
   gotWrongWord = () =>
   {
     this.bigClass = 'shake';

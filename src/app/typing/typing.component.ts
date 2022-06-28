@@ -52,12 +52,12 @@ export class TypingComponent {
     }
   }
 
-
-  // Below is the callback function for the ipa class
-  // Big arrow function allows it to be passed to the subclass 😎
-  callbackFunc = (struct: ipaStruct): void => {
-  
+  clearTypedWord = () => {
+    this.typedWord = '';
+    this.caret = 'caret flashing';
   }
+
+  callbackFunc = (struct: ipaStruct): void => { }
 
   
 

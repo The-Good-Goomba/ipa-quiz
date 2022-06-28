@@ -1,11 +1,6 @@
 <div [class]='bigClass'>
-    <div *ngIf="typingActive; else multiChoice">
-        <app-typing (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()"></app-typing>
-    </div>
-
-    <ng-template #multiChoice>
-        <app-multi-choice (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()"></app-multi-choice>
-    </ng-template>
+    <app-typing (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()" [class.hidden]="activeQuiz !== 'typing'"></app-typing>
+    <app-multi-choice (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()" [class.hidden]="activeQuiz !== 'multiChoice'"></app-multi-choice>
 </div>
 
 <!-- <app-table></app-table> -->
