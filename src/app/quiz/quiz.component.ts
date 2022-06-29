@@ -6,6 +6,9 @@ import { TypingComponent } from '../typing/typing.component';
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss'],
+  host: {
+    '(document:keydown)': 'handleKeyboardEvent($event)'
+  }
 })
 
 
@@ -13,9 +16,15 @@ import { TypingComponent } from '../typing/typing.component';
 export class QuizComponent {
   @ViewChild(TypingComponent) typingComponent!: TypingComponent;
 
-  bigClass: string = '';
+  shake: boolean = false;
   activeQuiz: string = 'typing';
-  endlessCounter: number = 0;
+  correctCounter: number = 0;
+
+
+  showTimer: boolean = false;
+  timerOn: boolean = false;
+  timerId!: NodeJS.Timeout;
+  timeLeft: number = 15;
 
 
   constructor(private navService: NavService) 
@@ -23,30 +32,60 @@ export class QuizComponent {
     navService.setFunction(this.changeComponent)
   }
 
-  changeComponent = () => 
-  {
-    this.activeQuiz = this.navService.getActiveQuiz()
-    this.typingComponent.clearTypedWord();
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (this.navService.getQuizMode() === 'timed' && event.key != 'Tab')
+    {
+      if(this.timerOn == false)
+      {
+        this.timerId = setInterval(this.countDown, 1000);
+      }
+      this.timerOn = true;
+      
+    }
   }
 
+  changeComponent = () => 
+  {
+    this.typingComponent.clearTypedWord();
+
+    this.activeQuiz = this.navService.getActiveQuiz()
+    this.timerOn = false;
+    this.showTimer = false;
+
+    if (this.navService.getQuizMode() === 'timed')
+    {
+      this.showTimer = true;
+      this.timeLeft = this.navService.getActiveTime();
+    }
+  
+  }
 
   gotCorrectWord = () =>
   {
     if (this.navService.getQuizMode() === 'endless')
     {
-      this.endlessCounter++;
+      this.correctCounter++;
     }
   }
   gotWrongWord = () =>
   {
-    this.bigClass = 'shake';
+    this.shake = true;
     setTimeout(this.stopShake, 500)
   }
 
   stopShake = () => {
-    this.bigClass = '';
+    this.shake = false;
   }
   
+  countDown = () =>
+  {
+    this.timeLeft--;
+    if (this.timeLeft < 1)
+    {
+      this.timerOn = false;
+      clearInterval(this.timerId);
+    }
+  }
 
 
 }

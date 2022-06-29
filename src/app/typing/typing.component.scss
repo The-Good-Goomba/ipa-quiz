@@ -15,37 +15,18 @@ $fontSize: 3vw;
 #component {
     width: 100%;
     height: fit-content;
-    align-content: flex-start;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    margin: -5vh 0 0 0;
-
-}
-
-.typingBox {
-    width: 100%;
-    height: $typingBoxHeight;
-    line-height: $typingBoxHeight;
-    text-align: center;
-    position: relative;
-    z-index: 3;
-    background-color: variables.$backgroundGrey;
-
-    p {
-        @include myFont;
-        font-size: $fontSize;
-    }
-
+    margin-top: -5vh;
 }
 
 .IPAWord {
-    width: 100%;
-    height: $typingBoxHeight;
-    text-align: center;
-    position: relative;
-    font-size: min(5vw,4rem);
+    width: 70%;
+    height: 160px;
     
-    margin: 0 auto;
+    text-align: left;
+    font-size: min(5vw,4rem); 
     @include myFont;
 
     :hover {
@@ -54,6 +35,27 @@ $fontSize: 3vw;
 
 
 }
+
+
+.typingBox {
+    width: 70%;
+    align-items: center;
+    display: flex;
+    height: 300px;
+    text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+    background-color: variables.$backgroundGrey;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+
+    p {
+        @include myFont;
+        font-size: $fontSize;
+    }
+
+}
+
 
 #phoneticTable {
 

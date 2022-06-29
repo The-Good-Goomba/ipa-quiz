@@ -53,6 +53,7 @@ export class TypingComponent {
   }
 
   clearTypedWord = () => {
+    this.ipa.nextWordIPA();
     this.typedWord = '';
     this.caret = 'caret flashing';
   }

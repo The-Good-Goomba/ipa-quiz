@@ -12,6 +12,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { TableComponent } from './table/table.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { NavService } from './navigation/nav.service';
+import { WinScreenComponent } from './win-screen/win-screen.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { NavService } from './navigation/nav.service';
     NavigationComponent,
     TableComponent,
     QuizComponent,
+    WinScreenComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,22 @@
 @use '../variables';
-@import url('../multi-choice/multi-choice.component.scss');
-@import url('../typing/typing.component.scss');
 
 .shake {
     animation: shake 0.5s;
 }
 .hidden {
     display: none !important;
+}
+
+
+.subtitle {
+    font-size: 2.5em;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+    color: variables.$honeyYellow;
+    height: 0;
+    width: 0;
+    line-height: 140px;
+    transform: translate(9rem,1.2rem);
 }
 
 @keyframes shake {

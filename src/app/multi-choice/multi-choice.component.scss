@@ -17,15 +17,15 @@ $wordHeight: 50vh;
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
-    margin: -5vh 0 0 0;
+    margin-top: -5vh;
 }
 
 .wordGoal 
 {
-    width: 100%;
+    width: 70%;
     height: 160px;
-    text-align: center;
-    margin: 0 auto 0 auto;
+    text-align: left;
+    font-size: min(5vw,4rem);
     @include myFont;
 }
 
@@ -33,14 +33,18 @@ $wordHeight: 50vh;
 {
     width: 70%;
     height: 300px;
-    margin: 0;
+    display: grid;
+    padding: 2.5%;
+    gap: 1.5rem;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
 }
 
 .choiceButton {
-    width: 45%;
-    height: 40%;
-    margin: 2%;
-    background-color: variables.$lightGrey;
+    background-color: rgb(40, 40, 40);
+    border: 1px solid variables.$honeyYellow;
     @include myFont();
     font-size: 200%;
 }

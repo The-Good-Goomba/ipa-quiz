@@ -3,14 +3,14 @@
 #Navigation {
     display: grid;
     gap: .5rem;
-   align-items: center;
-   font-size: 2.3rem;
-   grid-auto-flow: column;
-   grid-template-areas: "logo menu config";
-   grid-template-columns: auto 1fr auto;
-   line-height: 2.3rem;
-   padding: 0 5px;
-   z-index: 2;
+    align-items: center;
+    font-size: 2.3rem;
+    grid-auto-flow: column;
+    grid-template-areas: "logo menu config";
+    grid-template-columns: auto 1fr auto;
+    line-height: 2.3rem;
+    margin: 0 5px;
+    z-index: 2;
 }
 
 #menu {

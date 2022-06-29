@@ -16,10 +16,7 @@ export class MultiChoiceComponent {
 	@Output() correctWord = new EventEmitter<string>();
 	@Output() incorrectWord = new EventEmitter<string>();
 
-
-
 	ipa: Ipa;
-	wordFontSize: string = '5vw';
 	boxInfo: string[] = [];
 	correctIndex: number = 0;
 
@@ -32,7 +29,6 @@ export class MultiChoiceComponent {
   // Big arrow function allows it to be passed to the subclass 😎
 
 	callbackFunc = (struct: ipaStruct): void => {
-		this.wordFontSize = struct.word.length > 10 ? `${25 / struct.word.length}vw` : '5vw';
 		let temp = this.parseIpa(struct.ipa)
 		this.boxNamed(temp, struct.ipa);
 	}

@@ -4,9 +4,9 @@
     gap: 2rem;
     grid-auto-flow: row;
     grid-template-rows: auto 1fr auto;
+    padding: 0rem 2rem 0rem 2rem;
     max-width: 1000px;
     min-height: 100vh;
-    padding: 0rem 2rem 0rem 2rem;
     transition: padding-top .125s;
     width: 100%;
     z-index: 999;
