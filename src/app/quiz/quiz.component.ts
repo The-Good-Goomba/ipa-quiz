@@ -1,4 +1,5 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { MultiChoiceComponent } from '../multi-choice/multi-choice.component';
 import { NavService } from '../navigation/nav.service';
 import { TypingComponent } from '../typing/typing.component';
 
@@ -15,11 +16,13 @@ import { TypingComponent } from '../typing/typing.component';
 
 export class QuizComponent {
   @ViewChild(TypingComponent) typingComponent!: TypingComponent;
+  @ViewChild(MultiChoiceComponent) multiChoiceComponent!: MultiChoiceComponent;
 
   shake: boolean = false;
   activeQuiz: string = 'typing';
   correctCounter: number = 0;
 
+  showTable: boolean = false;
 
   showTimer: boolean = false;
   timerOn: boolean = false;
@@ -57,7 +60,9 @@ export class QuizComponent {
       this.showTimer = true;
       this.timeLeft = this.navService.getActiveTime();
     }
-  
+
+    this.typingComponent.ipa.setDifficulty(this.navService.getDifficulty());
+    this.multiChoiceComponent.ipa.setDifficulty(this.navService.getDifficulty());
   }
 
   gotCorrectWord = () =>

@@ -1,0 +1,23 @@
+
+#phoneticTable {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    // transform: translateY(-100vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 80%;
+    background-color: #fafafa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 3%;
+}

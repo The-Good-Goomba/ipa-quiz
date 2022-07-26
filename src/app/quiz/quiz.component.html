@@ -1,7 +1,12 @@
-<div [class.shake]='shake' id="content">
-    <div class="subtitle" [class.hidden]="!showTimer">{{timeLeft}}</div>
-    <app-typing (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()" [class.hidden]="activeQuiz !== 'typing'" style="width: 100%;"></app-typing>
-    <app-multi-choice (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()" [class.hidden]="activeQuiz !== 'multiChoice'" style="width: 100%;"></app-multi-choice>
+
+<div id="stuff">
+    <app-table style="grid-column: 1;grid-row: 1;" [class.hidden]="!showTable"></app-table>
+
+    <div [class.shake]='shake' id="content" style="grid-column: 1;grid-row: 1;">
+        <div class="subtitle" [class.hidden]="!showTimer">{{timeLeft}}</div>
+        <app-typing (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()" [class.hidden]="activeQuiz !== 'typing'"></app-typing>
+        <app-multi-choice (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()" [class.hidden]="activeQuiz !== 'multiChoice'"></app-multi-choice>
+    </div>
 </div>
 
-<!-- <app-table></app-table> -->
+

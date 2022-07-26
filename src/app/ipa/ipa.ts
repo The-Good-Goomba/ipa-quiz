@@ -2,6 +2,7 @@ import { DictionaryService } from "../dictionary/dictionary.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ipaStruct } from "../ipaStruct";
 let english_1k = require('./../../assets/english_1k.json');
+let english_25k = require('./../../assets/english_25k.json');
 let english_450k = require('./../../assets/english_450k.json');
 
 export class Ipa {
@@ -10,7 +11,7 @@ export class Ipa {
 	nextWord: boolean = false;
 	english = english_1k;
 
-	constructor(private dictionary: DictionaryService, wordSize: (struct: ipaStruct) => void) {
+	constructor(private dictionary: DictionaryService,  wordSize: (struct: ipaStruct) => void) {
 		this.currentIPA = {
 			ipa: '',
 			word: '',
@@ -34,6 +35,16 @@ export class Ipa {
 		this.currentIPA.word = this.nextIPA.word;
 		this.currentIPA.audio = this.nextIPA.audio;
 		this.wordSizeFunc(this.currentIPA);
+	}
+
+	setDifficulty = (difficulty: string) => {
+		if (difficulty === 'easy') {
+			this.english = english_1k;
+		} else if (difficulty === 'hard') {
+			this.english = english_450k;
+		} else {
+			this.english = english_25k;
+		}
 	}
 
 	nextWordIPA() {

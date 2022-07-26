@@ -25,7 +25,7 @@ $fontSize: 3vw;
     width: 70%;
     height: 160px;
     
-    text-align: left;
+    text-align: center;
     font-size: min(5vw,4rem); 
     @include myFont;
 
@@ -46,7 +46,7 @@ $fontSize: 3vw;
     vertical-align: middle;
     justify-content: center;
     background-color: variables.$backgroundGrey;
-    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.5);
     border-radius: 1rem;
 
     p {

@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter} from '@angular/core';
 import { DictionaryService } from '../dictionary/dictionary.service';
+import { NavService } from '../navigation/nav.service';
 import { Ipa } from '../ipa/ipa';
 import { ipaStruct } from '../ipaStruct';
 
@@ -33,6 +34,7 @@ export class TypingComponent {
         this.caret = 'caret flashing';
       }
     } else if (event.key == 'Enter') {
+      event.preventDefault();
       if (this.typedWord == this.ipa.currentIPA.word) {
         this.typedWord = this.typedWord.concat(event.key);
         this.correctWord.emit();
