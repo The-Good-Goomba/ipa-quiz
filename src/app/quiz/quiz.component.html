@@ -1,8 +1,6 @@
 
 <div id="stuff">
-    <app-table style="grid-column: 1;grid-row: 1;" [class.hidden]="!showTable"></app-table>
-    
-    <app-win-screen style="grid-column: 1;grid-row: 1;" [class.hidden]="!showWinScreen" (playAgainSignal)="restartQuiz()"> </app-win-screen>
+    <app-win-screen style="grid-column: 1;grid-row: 1;height: fit-content;" [class.hidden]="!showWinScreen" (playAgainSignal)="restartQuiz($event)"> </app-win-screen>
 
     <div [class.shake]='shake' [class.hidden]="showWinScreen" id="content" style="grid-column: 1;grid-row: 1;">
         <div class="subtitle" [class.hidden]="!showTimer">{{timeLeft}}</div>

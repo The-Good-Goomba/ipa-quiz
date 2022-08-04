@@ -1,0 +1,47 @@
+@use '../variables';
+
+.hidden {
+    display: none !important;
+}
+
+.word {
+    font-family: 'Roboto Mono', monospace;
+    color: variables.$honeyYellow; 
+    vertical-align: top;
+    font-size: 2.5rem;
+}
+
+.bigGreyWord {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Nunito';
+    color: variables.$lightGrey;
+    vertical-align: top;
+}
+
+.text-button {
+    transition: 0.125s;
+    align-content: center;
+    appearance: none;
+    border: none;
+    color: variables.$lightGrey;
+    cursor: pointer;
+    font-size: rem;
+    line-height: 1.25rem;
+    padding: .5rem;
+    text-align: center;
+    text-decoration: none;
+    width: max-content;
+    font-family: 'Roboto Mono', monospace;
+
+    &:hover {
+        color: white;
+    }
+}
+
+#gameInfo {
+    flex: 30%;
+    max-width: 30%;
+    display: grid;
+    grid-template: 1fr 1fr 1fr / 1fr 1fr;
+}

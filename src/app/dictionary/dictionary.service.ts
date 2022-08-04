@@ -10,10 +10,13 @@ export class DictionaryService {
 
   constructor(private http:HttpClient) { }
 
+  // Input the word that we want to look up
   getData(word: string) {
+    // Add the word to the url
     let url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
     url = url.concat(word);
 
+    // Return the data from the url
     return this.http.get(url);
   }
 }

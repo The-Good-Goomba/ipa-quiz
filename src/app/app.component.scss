@@ -1,6 +1,7 @@
 #centerContent {
     align-items: center;
-    display: grid;
+    display: flex;
+    flex-flow: column;
     gap: 2rem;
     grid-auto-flow: row;
     grid-template-rows: auto 1fr auto;

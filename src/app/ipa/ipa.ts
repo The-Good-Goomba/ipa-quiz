@@ -13,6 +13,10 @@ export class Ipa {
 	nextWord: boolean = false;
 	english = english_1k;
 
+	tryAgain: boolean = false;
+	lastWords: ipaStruct[] = [];
+	lastWordsIndex: number = 1;
+
 	constructor(private dictionary: DictionaryService,  wordSize: (struct: ipaStruct) => void) {
 		this.currentIPA = {
 			ipa: '',
@@ -38,6 +42,11 @@ export class Ipa {
 		this.currentIPA.word = this.nextIPA.word;
 		this.currentIPA.audio = this.nextIPA.audio;
 		this.wordSizeFunc(this.currentIPA);
+		this.lastWords.push( {
+			ipa: this.currentIPA.ipa,
+			word: this.currentIPA.word,
+			audio: this.currentIPA.audio,
+		});
 		// Changes the word, but doesnt change the memory location
 	}
 
@@ -52,28 +61,45 @@ export class Ipa {
 		// Difficulty is base off of the word range in the json file
 	}
 
-	nextWordIPA() {
+	restartTest = (sameWords: boolean) => {
+		this.tryAgain = sameWords;
+		if (this.tryAgain) {
+			this.currentIPA = this.lastWords[0];
+		} else {
+			this.lastWords = [];
+		}
+		
+	}
 
-		try {
-			this.setCurrentIPA();
-			this.runIpa(this.nextIPA);
-		} catch (error) {
-			this.nextWord = true;
-			// console.log("Waiting for API...", error);
-			this.runIpa(this.nextIPA);
+	nextWordIPA() {
+		if (this.tryAgain && this.lastWords.length > this.lastWordsIndex) {
+			this.currentIPA = this.lastWords[this.lastWordsIndex];
+			this.lastWordsIndex += 1;
+		} else {
+			this.tryAgain = false;
+			try {
+				this.setCurrentIPA();
+				this.runIpa(this.nextIPA);
+			} catch (error) {
+				this.nextWord = true;
+				// console.log("Waiting for API...", error);
+				this.runIpa(this.nextIPA);
+			}
 		}
 	}
 
 	private setStruct(data: any, struct: ipaStruct) {
 		try {
+			// Set each variable in the struct
 			struct.ipa = data[0].phonetic;
 			struct.word = data[0].word;
 			struct.audio = data[0].phonetics[0].audio;
 			if (struct.ipa == undefined) { throw "No IPA" }
 		} catch (error) {
-			// console.log(error);
+			// If we dont receive the phonetic, then try again
 			this.runIpa(struct);
 		}
+		// If the programs lagging, then we need to run the function again for he second word
 		if (this.nextWord) {
 
 			this.setCurrentIPA();
@@ -91,17 +117,17 @@ export class Ipa {
 		var index = Math.floor(Math.random() * this.english.words.length);
 		let word: string = this.english.words[index];
 
-		// console.log("Looking for " + word)
-
+		// Make a call to get the word
 		this.dictionary.getData(word).subscribe(
 			(data: any) => {
+				// If we receive data from the API, then get the info we need
 				this.setStruct(data, inputIPA);
-				// console.log('found word')
 			},
 			(error: HttpErrorResponse) => {
-				// console.warn('Cant find this word', error)
+				// If we receive an error, we need to try again
 				this.runIpa(inputIPA);
-			});
+			}
+		);
 
 
 	}

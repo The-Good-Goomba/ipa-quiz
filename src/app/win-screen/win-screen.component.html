@@ -1,8 +1,36 @@
-<div>
-    <div style="width:400px;height:400px">
+<div style='display:flex;flex-wrap: wrap;'>
+    <div style="flex:70%">
         <canvas id='winChart'>{{ winChart }}</canvas>
     </div>
-    <div>
-        <button (click)="playAgain()">Play Again</button>
+    <div id="gameInfo">
+        <div style="display: flex;flex-direction: column;">
+            <div class="bigGreyWord">WPM:</div>
+            <div class="word"> {{ averageWPM }}</div>
+        </div>
+        <div style="display: flex;flex-direction: column;">
+            <div class="bigGreyWord">Errors:</div>
+            <div class="word"> {{ errorCount }}</div>
+        </div>
+        <div style="display: flex;flex-direction: column;">
+            <div class="bigGreyWord">Mode:</div>
+            <div class="word"> {{ mode }}</div>
+        </div>
+        <div style="display: flex;flex-direction: column;">
+            <div class="bigGreyWord">Difficulty:</div>
+            <div class="word"> {{ difficulty }}</div>
+        </div>
+        <div style="display: flex;flex-direction: column;">
+            <div class="bigGreyWord">Accuracy:</div>
+            <div class="word"> {{ accuracy }}%</div>
+        </div>
+        <div [class.hidden]="time == undefined">
+            <div class="bigGreyWord">Time:</div>
+            <div class="word"> {{time}} </div>
+        </div>
+    </div>
+
+    <div style='display:flex;flex-wrap: nowrap;width: 30%;margin-top: 1rem;'>
+        <div (click)="playAgain(false)" style="flex:50%" class='text-button'> > Play Again</div>
+        <div (click)="playAgain(true)" style="flex:50%" class='text-button'> > Redo Test</div>
     </div>
 </div>

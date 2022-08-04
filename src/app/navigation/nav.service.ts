@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+// Contains all of the global variables that are used throughout the application
+// Uses get and set methods to access the variables
 
 @Injectable()
 export class NavService {

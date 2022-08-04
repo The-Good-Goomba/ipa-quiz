@@ -27,6 +27,7 @@ export class TypingComponent {
   }
   
   handleKeyboardEvent(event: KeyboardEvent) {
+    // If we press backspace, delete the last character in the typed word
     if(event.key == 'Backspace') {
       this.typedWord = this.typedWord.slice(0,-1);
       if (this.typedWord == '')
@@ -37,23 +38,26 @@ export class TypingComponent {
     } else if (event.key == 'Enter') {
       event.preventDefault(); // Prevents the page from refreshing
       if (this.typedWord == this.ipa.currentIPA.word) {
+        // If the word is correct, send signal to parent that we got it right
         this.typedWord = this.typedWord.concat(event.key);
         this.correctWord.emit();
         this.ipa.nextWordIPA();
+        // Clear the typed word and make the caret flash again
         this.typedWord = '';
         this.caret = 'caret flashing'
       }  else {
+        // If the word is incorrect, send signal to parent that we got it wrong
         this.incorrectWord.emit();
       }
     } else if (event.key == 'Tab') {
+      // Little sneaky way to get the answer to the current word
       alert(this.ipa.currentIPA.word);
     } else if (event.key.length > 1) {
-      // Dont handle long keys like tab, shift, caps etc
+      // Dont handle long keys like shift, caps, command etc
     } else {
+      // If the key is a letter, add it to the typed word and make the caret static
       this.typedWord = this.typedWord.concat(event.key);
       this.caret = 'caret';
-
-      
     }
   }
 

@@ -1,0 +1,15 @@
+@use '../variables';
+
+.heading {
+    font-family: 'Nunito';
+    font-weight: 200;
+    font-size: 3rem;
+    color: variables.$honeyYellow;
+}
+
+.textwall {
+    font-family: 'Nunito';
+    font-weight: 200;
+    font-size: 1.5rem;
+    color: variables.$fontColour;
+}

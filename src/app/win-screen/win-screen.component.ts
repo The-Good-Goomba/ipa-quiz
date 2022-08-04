@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Chart, ChartConfiguration, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, registerables } from 'chart.js';
-import { graphingData } from '../ipaStruct';
+import { Chart, ChartConfiguration, LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, registerables, Filler } from 'chart.js';
+import { NavService } from '../navigation/nav.service';
+import { graphingData, ipaStruct } from '../ipaStruct';
 
 @Component({
   selector: 'app-win-screen',
@@ -8,8 +9,10 @@ import { graphingData } from '../ipaStruct';
   styleUrls: ['./win-screen.component.scss']
 })
 export class WinScreenComponent implements OnInit {
-  @Output() playAgainSignal = new EventEmitter();
+  @Output() playAgainSignal = new EventEmitter<boolean>();
   
+  constructor(private nav: NavService) { }
+
   winChart!: Chart;
 
   wpm: graphingData[] = [];
@@ -18,16 +21,24 @@ export class WinScreenComponent implements OnInit {
   wordsPerMin: number[] = [];
   word: string[] = [];
 
+  averageWPM: number = 0;
   errorCount: number = 0;
 
+  mode: string = '';
+  difficulty: string = '';
+  time: number | undefined;
+  accuracy: number = 0;
+
   ngOnInit(): void {
-    Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
+    this.mode = this.nav.getQuizMode();
+    this.difficulty = this.nav.getDifficulty();
+    Chart.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale, Filler);
     this.wpm.push({time: 0, errors: -1});
     this.pieChartBrowser(); 
   }
 
-  playAgain = () => {
-    this.playAgainSignal.emit();
+  playAgain = (sameWords: boolean) => {
+    this.playAgainSignal.emit(sameWords);
     this.wpm.push({time: 0, errors: -1});
   }
 
@@ -36,18 +47,36 @@ export class WinScreenComponent implements OnInit {
     this.errors = [];
     this.word = [];
 
-    for (let i = 0; i < this.wpm.length; i++) {
+    this.mode = this.nav.getQuizMode();
+    this.difficulty = this.nav.getDifficulty();
+    if  (this.mode == 'timed') { this.time = this.nav.getActiveTime(); } 
+    else { this.time = undefined; }
+
+    this.computeAverageWPM();
+
+    this.wordsPerMin.push(this.averageWPM);
+    this.word.push('1');
+    for (let i = 1; i < this.wpm.length; i++) {
       this.wordsPerMin.push(60000 / this.wpm[i].time);
-      this.errors.push(this.wpm[i].errors);
+      if (this.wpm[i].errors > 0){ this.errors.push(this.wpm[i].errors); this.errorCount += this.wpm[i].errors; }
       this.word.push((i+1).toString());
-      if (this.errorCount < this.wpm[i].errors) {
-        this.errorCount = this.wpm[i].errors;
-      }
     }
+
+    this.accuracy = Math.floor(this.word.length * 100 / (this.word.length + this.errorCount));
+
     this.winChart.destroy();
     this.pieChartBrowser();
     console.log(this.word)
   }
+
+  computeAverageWPM = () => {
+    let totalWPM = 0;
+    for (let i = 1; i < this.wpm.length - 1; i++) {
+      totalWPM += 60000 / this.wpm[i].time;
+    }
+    this.averageWPM = Math.floor(totalWPM / (this.wpm.length - 2));
+  }
+
 
   pieChartBrowser(): void {
     this.winChart = new Chart('winChart', {
@@ -55,38 +84,85 @@ export class WinScreenComponent implements OnInit {
       data: {
         labels: this.word,
         datasets: [{
-          backgroundColor: [
-            '#2ecc71',
-            '#3498db',
-            '#95a5a6',
-            '#9b59b6',
-            '#f1c40f',
-            '#e74c3c'
-          ],
+          fill: true,
+          backgroundColor: 'rgb(255,255,255, 0.25)',
           label: 'WPM',
           yAxisID: 'WPM',
           data: this.wordsPerMin,
-          fill: true
+          tension: 0.2,
+          borderColor: 'rgba(255,255,255, 0.75)',
+          pointBackgroundColor: '#F2AF29',
+          pointBorderColor: '#F2AF29',
+          
         },{
           label: 'Errors',
           yAxisID: 'Errors',
           data: this.errors,
-          backgroundColor: '#e74c3c',
-          borderColor: 'rgba(255,255,255, 0)',
-          pointStyle: 'crossRot'
+          showLine: false,
+          pointStyle: 'crossRot',
+          pointBackgroundColor: '#AD343E',
+          pointBorderColor: '#AD343E',
+          pointBorderWidth: 2,
+          pointRadius: 5,
         }]
       },
       options: {
         scales: {
+          x: {
+            grid: {
+              color: 'rgba(255, 255, 255, 0.2)',
+            },
+            title: {
+              display: true,
+              text: 'Words',
+              font: {
+                size: 15,
+                family: 'Roboto Mono, monospace'
+              },
+            },
+            
+            min: 0,
+            max: this.word.length + 1,
+          },
           'WPM': {
             type: 'linear',
             position: 'left',
+            title: {
+              display: true,
+              text: 'words per min',
+              color: '#F2AF29',
+              font: {
+                size: 20,
+                family: 'Roboto Mono, monospace'
+              }
+            },
+            min: 0,
+            grid: {
+              color: 'rgba(255, 255, 255, 0.2)',
+            },
+            ticks: { 
+              callback: function(value: any, index, ticks) {
+            
+                if (value % 1 === 0) {
+                  return value;
+                }
+              }
+            }
           },
           'Errors': {
             type: 'linear',
             position: 'right',
             min: 0,
             max: this.errorCount + 1,
+            title: {
+              display: true,
+              text: 'errors',
+              color: '#AD343E',
+              font: {
+                size: 20,
+                family: 'Roboto Mono, monospace'
+              }
+            },
             ticks: { 
               callback: function(value: any, index, ticks) {
             
