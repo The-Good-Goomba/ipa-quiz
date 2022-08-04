@@ -23,6 +23,11 @@
     transform: translate(9rem,1.2rem);
 }
 
+.rightSide {
+    transform: translate(48rem,1.2rem);
+    text-align: right;
+}
+
 @keyframes shake {
     0% { transform: translateX(1px)}
     10% { transform: translateX(-1px) }

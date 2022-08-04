@@ -1,9 +1,12 @@
 
 <div id="stuff">
     <app-table style="grid-column: 1;grid-row: 1;" [class.hidden]="!showTable"></app-table>
+    
+    <app-win-screen style="grid-column: 1;grid-row: 1;" [class.hidden]="!showWinScreen" (playAgainSignal)="restartQuiz()"> </app-win-screen>
 
-    <div [class.shake]='shake' id="content" style="grid-column: 1;grid-row: 1;">
+    <div [class.shake]='shake' [class.hidden]="showWinScreen" id="content" style="grid-column: 1;grid-row: 1;">
         <div class="subtitle" [class.hidden]="!showTimer">{{timeLeft}}</div>
+        <div class="subtitle rightSide" [class.hidden]="!showCounter">{{correctCounter}}</div>
         <app-typing (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()" [class.hidden]="activeQuiz !== 'typing'"></app-typing>
         <app-multi-choice (correctWord)="gotCorrectWord()" (incorrectWord)="gotWrongWord()" [class.hidden]="activeQuiz !== 'multiChoice'"></app-multi-choice>
     </div>

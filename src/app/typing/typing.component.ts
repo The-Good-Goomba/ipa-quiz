@@ -15,11 +15,11 @@ import { ipaStruct } from '../ipaStruct';
 export class TypingComponent {
   @Output() correctWord = new EventEmitter<string>();
   @Output() incorrectWord = new EventEmitter<string>();
+// These are the event emmiters to communicate with the quiz component
 
-
-  caret: string = 'caret flashing';
-  typedWord:string = '';
-  ipa: Ipa;
+  caret: string = 'caret flashing'; // The classes for the caret (flashing or not)
+  typedWord:string = ''; // The string containing the typed word
+  ipa: Ipa; // A class that generates the ipa for the current word
 
 
   constructor(private dictionary: DictionaryService) {
@@ -31,10 +31,11 @@ export class TypingComponent {
       this.typedWord = this.typedWord.slice(0,-1);
       if (this.typedWord == '')
       {
+        // If the word is empty, the caret is flashing, else it isnt
         this.caret = 'caret flashing';
       }
     } else if (event.key == 'Enter') {
-      event.preventDefault();
+      event.preventDefault(); // Prevents the page from refreshing
       if (this.typedWord == this.ipa.currentIPA.word) {
         this.typedWord = this.typedWord.concat(event.key);
         this.correctWord.emit();
@@ -44,8 +45,10 @@ export class TypingComponent {
       }  else {
         this.incorrectWord.emit();
       }
+    } else if (event.key == 'Tab') {
+      alert(this.ipa.currentIPA.word);
     } else if (event.key.length > 1) {
-      
+      // Dont handle long keys like tab, shift, caps etc
     } else {
       this.typedWord = this.typedWord.concat(event.key);
       this.caret = 'caret';
@@ -61,7 +64,7 @@ export class TypingComponent {
   }
 
   callbackFunc = (struct: ipaStruct): void => { }
-
+// An empty function that needs to be passed to the ipa class
   
 
 }
