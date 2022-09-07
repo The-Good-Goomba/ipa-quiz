@@ -38,7 +38,9 @@ export class WinScreenComponent implements OnInit {
   }
 
   playAgain = (sameWords: boolean) => {
+    
     this.playAgainSignal.emit(sameWords);
+    this.errorCount = 0;
     this.wpm.push({time: 0, errors: -1});
   }
 
@@ -46,6 +48,7 @@ export class WinScreenComponent implements OnInit {
     this.wordsPerMin = [];
     this.errors = [];
     this.word = [];
+    this.errorCount = 0;
 
     this.mode = this.nav.getQuizMode();
     this.difficulty = this.nav.getDifficulty();
