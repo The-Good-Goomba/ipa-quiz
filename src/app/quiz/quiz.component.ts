@@ -68,6 +68,7 @@ export class QuizComponent {
     this.typingComponent.clearTypedWord();
 
     // Resets the quiz component
+    
     this.activeQuiz = this.navService.getActiveQuiz()
     this.timerOn = false;
     this.showTimer = false;
